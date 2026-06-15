@@ -1,0 +1,35 @@
+<h2>User info</h2>
+
+<% if user.profile_image.attached? %>
+  <%= image_tag user.profile_image %>
+<% else %>
+  <p>No Image</p>
+<% end %>
+
+<table>
+  <tbody>
+    <tr>
+      <th>name</th>
+      <td><%= user.name %></td>
+    </tr>
+
+    <tr>
+      <th>introduction</th>
+      <td><%= user.introduction %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= link_to "Edit", edit_user_path(user) %>
+
+<h2>New book</h2>
+
+<%= form_with model: book do |f| %>
+  <p>title</p>
+  <%= f.text_field :title %>
+
+  <p>opinion</p>
+  <%= f.text_area :body %>
+
+  <%= f.submit "Create Book" %>
+<% end %>

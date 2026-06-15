@@ -1,0 +1,21 @@
+<h1>Sign up</h1>
+
+<%= form_with model: @user do |f| %>
+  <p>Name</p>
+  <%= f.text_field :name %>
+
+  <p>Email</p>
+  <%= f.email_field :email_address %>
+
+  <p>Password</p>
+  <%= f.password_field :password %>
+
+  <p>Password confirmation</p>
+  <%= f.password_field :password_confirmation %>
+
+  <p>
+    <%= f.submit "Sign up" %>
+  </p>
+
+  <p> Log in 後からlinkを付ける </p>
+<% end %>
