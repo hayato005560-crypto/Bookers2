@@ -4,8 +4,10 @@ Rails.application.routes.draw do
   
   root "homes#top"
   get "homes/top" => "homes#top"
+  get "home/about" => "homes#about", as: "about"
 
   resources :books
+  get "users/sign_up" => "users#new", as: "new_user"
   resources :users, only: [:index, :show, :edit, :update, :new, :create]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <%= render "users/sidebar", user: @user, book: @new_book %>
+    </div>
+
+    <div class="col-md-8 offset-md-1">
+      <h2>Book detail</h2>
+
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>
+              <% if @book.user.profile_image.attached? %>
+                <%= image_tag @book.user.profile_image, size: "80x80" %>
+              <% else %>
+                <p>No Image</p>
+              <% end %>
+
+              <p><%= link_to @book.user.name, user_path(@book.user) %></p>
+            </td>
+
+            <td><%= link_to @book.title, book_path(@book) %></td>
+            <td><%= @book.body %></td>
+
+            <% if @book.user == Current.user %>
+              <td><%= link_to "Edit", edit_book_path(@book), class: "btn btn-success btn-sm" %></td>
+              <td><%= link_to "Destroy", book_path(@book), data: { turbo_method: :delete }, class: "btn btn-danger btn-sm" %></td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

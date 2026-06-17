@@ -5,11 +5,12 @@
     </div>
 
     <div class="col-md-8 offset-md-1">
-      <h2>Books</h2>
+      <h2 class="border-bottom">Books</h2>
 
       <table class="table">
         <thead>
           <tr>
+            <th></th>
             <th>Title</th>
             <th>Opinion</th>
           </tr>
@@ -18,6 +19,16 @@
         <tbody>
           <% @books.each do |book| %>
             <tr>
+              <td>
+                <%= link_to user_path(book.user) do %>
+                  <% if book.user.profile_image.attached? %>
+                    <%= image_tag book.user.profile_image, size: "80x80" %>
+                  <% else %>
+                    <p>No Image</p>
+                  <% end %>
+                <% end %>
+              </td>
+
               <td><%= link_to book.title, book_path(book) %></td>
               <td><%= book.body %></td>
             </tr>

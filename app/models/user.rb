@@ -7,8 +7,8 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   
-  validates :name, presence: true, length: { minimum: 2}
+  validates :name, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: true
+  validates :introduction, length: { maximum: 50 }
   validates :email_address, presence: true, uniqueness: true
   validates :password, length: { minimum: 6 }, allow_nil: true
-
 end

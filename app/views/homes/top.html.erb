@@ -1,13 +1,28 @@
-<h1>welcome to Bookers!!</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 col-md-10 mx-auto text-center">
+      <h1 class="text-start">
+        Welcome to
+        <i class="fa-solid fa-book"></i>
+        <strong>Bookers</strong>"!!"
+      </h1>
 
-<p>
-in<strong>Bookers,</strong>
-</p>
+      <div class="text-start">
+        <p>
+          In
+          <i class="fa-solid fa-book"></i>
+          <strong>Bookers,</strong>
+        </p>
 
-<p>you can share and exchange your opinions , inpressions , and emotions</p>
+        <p>you can share and exchange your opinions, impressions, and emotions</p>
 
-<p>about various books!</p>
+        <p>about various books!</p>
+      </div>
 
-<%= link_to "Log in", new_session_path %>
-
-<%= link_to "Sign up", new_user_path %>
+      <div class="btn-wrapper col-10 mx-auto text-center">
+        <%= link_to "Log in", new_session_path, class: "btn btn-info w-100 mb-2 text-white" %>
+        <%= link_to "Sign up", new_user_path, class: "btn btn-success w-100 text-white" %>
+      </div>
+    </div>
+  </div>
+</div>

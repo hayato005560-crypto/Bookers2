@@ -1,11 +1,48 @@
 <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
 <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
 
-<%= form_with url: session_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %><br>
-  <%= form.submit "Sign in" %>
-<% end %>
-<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <h1>Log in</h1>
 
-<%= link_to "Forgot password?", new_password_path %>
+      <%= form_with url: session_path do |form| %>
+        <div class="mb-1">
+          <p class="mb-1">Name</p>
+          <%= form.text_field :name,
+                required: true,
+                autofocus: true,
+                autocomplete: "username",
+                value: params[:name],
+                class: "form-control" %>
+        </div>
+
+        <div class="mb-1">
+          <p class="mb-1">Password</p>
+          <%= form.password_field :password,
+                required: true,
+                autocomplete: "current-password",
+                maxlength: 72,
+                class: "form-control" %>
+        </div>
+
+        <div class="mb-2 form-check">
+          <%= form.check_box :remember_me, class: "form-check-input" %>
+          <%= form.label :remember_me, "Remember me", class: "form-check-label" %>
+        </div>
+
+        <div class="mb-1">
+          <%= form.submit "Log in", class: "btn btn-primary text-white" %>
+        </div>
+      <% end %>
+
+      <div>
+        <%= link_to "Sign up", new_user_path %>
+      </div>
+
+      <div>
+        <%= link_to "Forgot your password?", new_password_path %>
+      </div>
+    </div>
+  </div>
+</div>

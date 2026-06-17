@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <h1>User info</h1>
+
+      <% if @user&.errors&.any? %>
+        <div class="text-danger">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form_with model: @user do |f| %>
+        <div class="mb-3">
+          <p>Name</p>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <p>Image</p>
+          <%= f.file_field :profile_image, class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <p>Introduction</p>
+          <%= f.text_area :introduction, class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.submit "Update User", class: "btn btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

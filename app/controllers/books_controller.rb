@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
-
-      def index
+  
+  def index
     @books = Book.all
     @book = Book.new
     @user = Current.user
@@ -14,6 +14,11 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
+
+    if @book.user != Current.user
+      redirect_to books_path
+      return
+    end
   end
 
   def create
@@ -21,9 +26,10 @@ class BooksController < ApplicationController
     @book.user_id = Current.user.id
 
     if @book.save
-      redirect_to book_path(@book)
+      redirect_to book_path(@book), notice: "Book was successfully created."
     else
-      @books = Book.all
+      flash.now[:alert] = "Book creation error."
+      @books = Book.all.order(created_at: :asc)
       @user = Current.user
       render :index, status: :unprocessable_entity
     end
@@ -32,15 +38,27 @@ class BooksController < ApplicationController
   def update
     @book = Book.find(params[:id])
 
+    if @book.user != Current.user
+      redirect_to books_path
+      return
+    end
+
     if @book.update(book_params)
-      redirect_to book_path(@book)
+      redirect_to book_path(@book), notice: "Book was successfully updated."
     else
+      flash.now[:alert] = "Book update error."
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @book = Book.find(params[:id])
+
+    if @book.user != Current.user
+      redirect_to books_path
+      return
+    end
+
     @book.destroy
     redirect_to books_path
   end
@@ -50,5 +68,4 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body)
   end
-
 end
