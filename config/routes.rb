@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   get "homes/top" => "homes#top"
   get "home/about" => "homes#about", as: "about"
 
-  resources :books
+  resources :books do
+    resource :favorite, only: [:create, :destroy]
+    resources :book_comments, only: [:create, :destroy]
+  end
   get "users/sign_up" => "users#new", as: "new_user"
   resources :users, only: [:index, :show, :edit, :update, :new, :create]
 

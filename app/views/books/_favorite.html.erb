@@ -1,0 +1,5 @@
+<% if book.favorited_by?(Current.user) %>
+  <%= link_to "♥#{book.favorites.count}", book_favorite_path(book), data: { turbo_method: :delete }, class: "text-danger text-decoration-none" %>
+<% else %>
+  <%= link_to "♥#{book.favorites.count}", book_favorite_path(book), data: { turbo_method: :post }, class: "text-decoration-none" %>
+<% end %>
