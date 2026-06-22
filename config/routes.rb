@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   end
   get "users/sign_up" => "users#new", as: "new_user"
   resources :users, only: [:index, :show, :edit, :update, :new, :create]
+  resources :relationships, only: [:create, :destroy]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
