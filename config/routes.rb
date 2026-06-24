@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "search" => "searches#search", as: "search"
   resource :session
   resources :passwords, param: :token
   
@@ -11,7 +12,13 @@ Rails.application.routes.draw do
     resources :book_comments, only: [:create, :destroy]
   end
   get "users/sign_up" => "users#new", as: "new_user"
-  resources :users, only: [:index, :show, :edit, :update, :new, :create]
+  resources :users, only: [:index, :show, :edit, :update, :new, :create] do
+    member do
+      get :follows
+      get :followers
+    end
+  end
+  
   resources :relationships, only: [:create, :destroy]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

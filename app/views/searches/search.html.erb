@@ -1,0 +1,71 @@
+<% if @range == "User" %>
+  <h3>Users search for "<%= @word %>"</h3>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>name</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @records.each do |user| %>
+        <tr>
+          <td>
+            <% if user.profile_image.attached? %>
+              <%= image_tag user.profile_image, size: "80x80" %>
+            <% else %>
+              <%= image_tag "default-image.jpg", size: "80x80" %>
+            <% end %>
+          </td>
+
+          <td>
+            <%= user.name %>
+          </td>
+
+          <td>
+            <%= link_to "Show", user_path(user) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% else %>
+  <h3>Books search for "<%= @word %>"</h3>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Opinion</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @records.each do |book| %>
+        <tr>
+          <td>
+              <% if book.user.profile_image.attached? %>
+                <%= image_tag book.user.profile_image, size: "80x80" %>
+              <% else %>
+                <%= image_tag "default-image.jpg", size: "80x80" %>
+              <% end %>
+          </td>
+
+          <td>
+            <%= link_to book.title, book_path(book) %>
+          </td>
+
+          <td>
+            <%= book.body %>
+          </td>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

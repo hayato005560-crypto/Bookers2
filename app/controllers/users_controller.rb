@@ -9,11 +9,11 @@ class UsersController < ApplicationController
       @user = User.new(user_params)
 
       if @user.save
-        start_new_session_for @user
-        redirect_to user_path(@user), notice: "User was successfully created."
+          start_new_session_for @user
+          redirect_to user_path(@user), notice: "User was successfully created."
       else
-        flash.now[:alert] = "User registration error."
-        render :new, status: :unprocessable_entity
+          flash.now[:alert] = "User registration error."
+          render :new, status: :unprocessable_entity
       end
   end
     
@@ -41,19 +41,31 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
+      @user = User.find(params[:id])
 
-    if @user != Current.user
-        redirect_to user_path(Current.user)
-        return
-    end
+      if @user != Current.user
+          redirect_to user_path(Current.user)
+          return
+      end
 
-    if @user.update(user_params)
-        redirect_to user_path(@user), notice: "User was successfully updated."
-    else
-        flash.now[:alert] = "User update error."
-        render :edit, status: :unprocessable_entity
-    end
+      if @user.update(user_params)
+          redirect_to user_path(@user), notice: "User was successfully updated."
+      else
+          flash.now[:alert] = "User update error."
+          render :edit, status: :unprocessable_entity
+      end
+  end
+
+  def follows
+      @user = User.find(params[:id])
+      @users = @user.followings
+      @book = Book.new
+  end
+
+  def followers
+      @user = User.find(params[:id])
+      @users = @user.followers
+      @book = Book.new
   end
 
   private

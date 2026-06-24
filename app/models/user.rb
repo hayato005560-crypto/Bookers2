@@ -22,6 +22,25 @@ class User < ApplicationRecord
     followings.include?(user)
   end
 
+  def self.search_for(word, search)
+    if word.blank?
+      return User.all
+    end
+
+    case search
+      when "perfect_match"
+        User.where(name: word)
+      when "forward_match"
+        User.where("name LIKE ?", "#{word}%")
+      when "backward_match"
+        User.where("name LIKE ?", "%#{word}")
+      when "partial_match"
+        User.where("name LIKE ?", "%#{word}%")
+      else
+        User.all
+      end
+    end
+
   has_one_attached :profile_image
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
