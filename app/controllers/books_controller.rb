@@ -22,21 +22,7 @@ class BooksController < ApplicationController
     end
   end
 
-  def create
-    @book = Book.new(book_params)
-    @book.user_id = Current.user.id
-
-    if @book.save
-      redirect_to book_path(@book), notice: "Book was successfully created."
-    else
-      flash.now[:alert] = "Book creation error."
-      @books = Book.all.order(created_at: :asc)
-      @user = Current.user
-      render :index, status: :unprocessable_entity
-    end
-  end
-
-  def update
+    def update
     @book = Book.find(params[:id])
 
     if @book.user != Current.user
@@ -52,21 +38,36 @@ class BooksController < ApplicationController
     end
   end
 
-  def destroy
-    @book = Book.find(params[:id])
+  def create
+    @book = Book.find(params[:book_id])
+    @book_comment = @book.book_comments.new(book_comment_params)
+    @book_comment.user = Current.user
+    @book_comment.save
 
-    if @book.user != Current.user
-      redirect_to books_path
-      return
+    @new_book_comment = BookComment.new
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to book_path(@book) }
     end
+  end
 
-    @book.destroy
-    redirect_to books_path
+  def destroy
+    @book = Book.find(params[:book_id])
+    @book_comment = @book.book_comments.find(params[:id])
+    @book_comment.destroy
+
+    @new_book_comment = BookComment.new
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to book_path(@book) }
+    end
   end
 
   private
 
-  def book_params
-    params.require(:book).permit(:title, :body)
+  def book_comment_params
+    params.require(:book_comment).permit(:comment)
   end
 end
