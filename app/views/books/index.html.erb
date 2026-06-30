@@ -53,6 +53,25 @@
           <% end %>
         </tbody>
       </table>
+        <h2>7日間の投稿数</h2>
+  
+        <table class="table table-bordered">
+        <thead>
+          <tr>
+            <% @last_7_days_book_counts.each do |data| %>
+              <th><%= data[:label] %></th>
+            <% end %>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <% @last_7_days_book_counts.each do |data| %>
+              <td><%= data[:count] %></td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

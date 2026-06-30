@@ -35,6 +35,57 @@
           <% end %>
         </tbody>
       </table>
+
+      <h2>投稿数の前日比・前週比</h2>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>今日の投稿数</th>
+            <th>前日の投稿数</th>
+            <th>前日比</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><%= @today_book_count %></td>
+            <td><%= @yesterday_book_count %></td>
+            <td>
+              <% if @yesterday_book_count == 0 %>
+                <%= @day_comparison %>
+              <% else %>
+                <%= @day_comparison %>%
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>今週の投稿数</th>
+            <th>先週の投稿数</th>
+            <th>前週比</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><%= @this_week_book_count %></td>
+            <td><%= @last_week_book_count %></td>
+            <td>
+              <% if @last_week_book_count == 0 %>
+                <%= @week_comparison %>
+              <% else %>
+                <%= @week_comparison %>%
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
     </div>
   </div>
 </div>

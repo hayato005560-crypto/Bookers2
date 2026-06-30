@@ -29,6 +29,24 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       @books = @user.books
       @book = Book.new
+
+      @today_book_count = @books.where(created_at: Time.current.all_day).count
+      @yesterday_book_count = @books.where(created_at: 1.day.ago.all_day).count
+
+      if @yesterday_book_count == 0
+        @day_comparison = "前日の投稿はありません"
+      else
+        @day_comparison = (@today_book_count.to_f / @yesterday_book_count *100).round
+      end
+
+      @this_week_book_count = @books.where(created_at: 6.days.ago.beginning_of_day..Time.current.end_of_day).count
+      @last_week_book_count = @books.where(created_at: 13.days.ago.beginning_of_day..7.days.ago.end_of_day).count
+
+      if @last_week_book_count == 0
+        @week_comparison = "先週の投稿はありません"
+      else
+        @week_comparison = (@this_week_book_count.to_f / @last_week_book_count * 100).round
+      end
   end
 
   def edit

@@ -4,6 +4,16 @@ class BooksController < ApplicationController
     @books = Book.all
     @book = Book.new
     @user = Current.user
+
+    @last_7_days_book_counts = (0..6).map do |i|
+      days_ago = 6 - i
+      date = days_ago.days.ago.to_date
+
+      {
+        label: days_ago == 0 ? "今日" : "#{days_ago}日前",
+        count: Book.where(created_at: date.all_day).count
+      }
+    end
   end
 
   def show
@@ -22,7 +32,7 @@ class BooksController < ApplicationController
     end
   end
 
-    def update
+  def update
     @book = Book.find(params[:id])
 
     if @book.user != Current.user
@@ -39,35 +49,27 @@ class BooksController < ApplicationController
   end
 
   def create
-    @book = Book.find(params[:book_id])
-    @book_comment = @book.book_comments.new(book_comment_params)
-    @book_comment.user = Current.user
-    @book_comment.save
-
-    @new_book_comment = BookComment.new
-
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to book_path(@book) }
-    end
+    @book = Book.new(book_params)
+    @book.user = Current.user
+  
+    if @book.save
+      redirect_to book_path(@book), notice: "Book was successfully created."
+    else
+      @books = Book.all
+      @user = Current.user
+      render :index, status: :unprocessable_entity
+    end    
   end
 
   def destroy
-    @book = Book.find(params[:book_id])
-    @book_comment = @book.book_comments.find(params[:id])
-    @book_comment.destroy
-
-    @new_book_comment = BookComment.new
-
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to book_path(@book) }
-    end
+    @book = Book.find(params[:id])
+    @book.destroy
+    redirect_to books_path
   end
 
   private
 
-  def book_comment_params
-    params.require(:book_comment).permit(:comment)
+  def book_params
+    params.require(:book).permit(:title, :body)
   end
 end
