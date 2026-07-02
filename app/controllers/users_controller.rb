@@ -3,12 +3,17 @@ class UsersController < ApplicationController
 
   def search_book_count
       @user = User.find(params[:id])
-      @search_date = Date.parse(params[:search_date])
-      @book_count = @user.books.where(created_at: @search_date.all_day).count
-    
+
+      if params[:search_date].blank?
+          @book_count = nil
+      else
+          @search_date = Date.parse(params[:search_date])
+          @book_count = @user.books.where(created_at: @search_date.all_day).count
+      end
+
       respond_to do |format|
           format.turbo_stream
-          format.html { redirect_to user_path(@user)}
+          format.html { redirect_to user_path(@user) }
       end
   end
 
