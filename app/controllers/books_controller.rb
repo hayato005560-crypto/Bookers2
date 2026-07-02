@@ -14,6 +14,9 @@ class BooksController < ApplicationController
         count: Book.where(created_at: date.all_day).count
       }
     end
+
+    @chart_labels = @last_7_days_book_counts.map { |data| data[:label] }
+    @chart_counts = @last_7_days_book_counts.map { |data| data[:count] }
   end
 
   def show

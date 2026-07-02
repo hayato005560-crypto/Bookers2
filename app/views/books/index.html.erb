@@ -72,6 +72,14 @@
           </tr>
         </tbody>
       </table>
+
+      <div style="width: 200%, max-width: 700px;">
+        <canvas
+          id="last7DaysChart"
+          data-labels="<%= @chart_labels.to_json %>"
+          data-counts="<%= @chart_counts.to_json %>" >
+        </canvas>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,19 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>投稿数</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>
+        <% if book_count.nil? %>
+          -
+        <% else %>
+          <%= book_count %>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>

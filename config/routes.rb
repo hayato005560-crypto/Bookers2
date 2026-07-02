@@ -11,11 +11,14 @@ Rails.application.routes.draw do
     resource :favorite, only: [:create, :destroy]
     resources :book_comments, only: [:create, :destroy]
   end
+  
   get "users/sign_up" => "users#new", as: "new_user"
+
   resources :users, only: [:index, :show, :edit, :update, :new, :create] do
     member do
       get :follows
       get :followers
+      get :search_book_count
     end
   end
   

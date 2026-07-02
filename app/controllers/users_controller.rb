@@ -1,6 +1,17 @@
 class UsersController < ApplicationController
   allow_unauthenticated_access only: [:new, :create]
 
+  def search_book_count
+      @user = User.find(params[:id])
+      @search_date = Date.parse(params[:search_date])
+      @book_count = @user.books.where(created_at: @search_date.all_day).count
+    
+      respond_to do |format|
+          format.turbo_stream
+          format.html { redirect_to user_path(@user)}
+      end
+  end
+
   def new
       @user = User.new
   end

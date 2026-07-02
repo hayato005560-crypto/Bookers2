@@ -18,3 +18,8 @@
   box-shadow: none;
   outline: none;
 }
+
+.book-row:hover > td {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
