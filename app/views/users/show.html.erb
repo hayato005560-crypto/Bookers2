@@ -2,6 +2,9 @@
   <div class="row">
     <div class="col-md-3">
       <%= render "users/sidebar", user: @user, book: @book %>
+      <% if Current.user != @user && Current.user.mutual_follow?(@user) %>
+        <%= button_to "DM", rooms_path(user_id: @user.id), method: :post %>
+      <% end %>
     </div>
 
     <div class="col-md-8 offset-md-1">

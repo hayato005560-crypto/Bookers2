@@ -30,4 +30,15 @@ class Book < ApplicationRecord
     end
   end
   
+  def self.weekly_favorite_rank
+    one_week_ago = connection.quote(1.week.ago)
+
+    joins(
+      "LEFT OUTER JOIN favorites
+       ON favorites.book_id = books.id
+       AND favorites.created_at >= #{one_week_ago}"
+    )
+      .group("books.id")
+      .order(Arel.sql("COUNT(favorites.id) DESC"))
+  end
 end

@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
   
   def index
-    @books = Book.all
+    @books = Book.weekly_favorite_rank
     @book = Book.new
     @user = Current.user
 
@@ -58,7 +58,7 @@ class BooksController < ApplicationController
     if @book.save
       redirect_to book_path(@book), notice: "Book was successfully created."
     else
-      @books = Book.all
+      @books = Book.weekly_favorite_rank
       @user = Current.user
       render :index, status: :unprocessable_entity
     end    

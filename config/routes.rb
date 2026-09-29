@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   end
   
   resources :relationships, only: [:create, :destroy]
+  resources :rooms, only: [:show, :create]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
